@@ -38,21 +38,21 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(children: [
-           TextField(
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly
-                ],
-                decoration: InputDecoration(border: OutlineInputBorder()),
-           ),
-          SizedBox(height: 100,),
+          TextField(
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly
+            ],
+            decoration: const InputDecoration(border: OutlineInputBorder()),
+          ),
+          const SizedBox(height: 100,),
           TextFormField(
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly
-                ],
-                decoration: InputDecoration(border: OutlineInputBorder()),
-           )
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly
+            ],
+            decoration: const InputDecoration(border: OutlineInputBorder()),
+          )
         ],),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );

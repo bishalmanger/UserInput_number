@@ -8,18 +8,16 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    return const MaterialApp(
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
   final String title;
 
   @override
@@ -27,6 +25,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final FocusNode _node1 = FocusNode();
+  final FocusNode _node2 = FocusNode();
+  final TextEditingController _controller1 = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
+
+  @override
+  void dispose() {
+    _node1.dispose();
+    _node2.dispose();
+    _controller1.dispose();
+    _controller2.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,24 +48,42 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(children: [
-          TextField(
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly
-            ],
-            decoration: const InputDecoration(border: OutlineInputBorder()),
-          ),
-          const SizedBox(height: 100,),
-          TextFormField(
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly
-            ],
-            decoration: const InputDecoration(border: OutlineInputBorder()),
-          )
-        ],),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+        child: Column(
+          children: [
+            TextField(
+              focusNode: _node1,
+              controller: _controller1,
+              keyboardType:
+              const TextInputType.numberWithOptions(decimal: true),
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              decoration:
+              const InputDecoration(border: OutlineInputBorder()),
+              textInputAction: TextInputAction.next,
+              onSubmitted: (_) {
+                FocusScope.of(context).requestFocus(_node2);
+              },
+            ),
+            const SizedBox(height: 100),
+            TextFormField(
+              focusNode: _node2,
+              controller: _controller2,
+              keyboardType:
+              const TextInputType.numberWithOptions(decimal: true),
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              decoration:
+              const InputDecoration(border: OutlineInputBorder()),
+              textInputAction: TextInputAction.done,
+              onFieldSubmitted: (_) {
+                _node2.unfocus(); // Optional: hide keyboard on submit
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
